@@ -1,0 +1,87 @@
+[gd_scene load_steps=16 format=3 uid="uid://bxxmksg5uys8k"]
+
+[ext_resource type="Texture2D" uid="uid://bxjx5cddr0fuf" path="res://Textures/Sand_512.jpg" id="1_jsg1f"]
+[ext_resource type="Texture2D" uid="uid://dwg704lapfpp5" path="res://Textures/Sand_rough_ao_512.jpg" id="2_0gq73"]
+[ext_resource type="Texture2D" uid="uid://0uftxgo553im" path="res://Textures/Sand_normal_512.jpg" id="3_trfam"]
+[ext_resource type="Material" uid="uid://cjmi3vd3frkdj" path="res://water.material" id="4_dptbb"]
+[ext_resource type="Texture2D" uid="uid://dv5bii04s5dqh" path="res://Textures/rough_wood_Diff.jpg" id="5_y2bgs"]
+[ext_resource type="Texture2D" uid="uid://cm1ft4fgmjtqx" path="res://Textures/rough_wood_nor.jpg" id="6_ucccv"]
+[ext_resource type="Texture2D" uid="uid://b1d8snfalqwut" path="res://Textures/rough_wood_rough.jpg" id="7_q2acg"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_7ntsq"]
+size = Vector2(20, 10)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_grbwm"]
+albedo_texture = ExtResource("1_jsg1f")
+roughness_texture = ExtResource("2_0gq73")
+normal_enabled = true
+normal_texture = ExtResource("3_trfam")
+ao_enabled = true
+ao_texture = ExtResource("2_0gq73")
+ao_texture_channel = 1
+uv1_scale = Vector3(0.4, 0.4, 0.4)
+uv1_triplanar = true
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_gucds"]
+sky_top_color = Color(0.6, 0.560784, 0.54902, 1)
+sky_horizon_color = Color(0.823529, 0.588235, 0.541176, 1)
+ground_bottom_color = Color(0.254902, 0.364706, 0.356863, 1)
+ground_horizon_color = Color(0.760784, 0.623529, 0.529412, 1)
+
+[sub_resource type="Sky" id="Sky_v0xaq"]
+sky_material = SubResource("ProceduralSkyMaterial_gucds")
+
+[sub_resource type="Environment" id="Environment_unnir"]
+background_mode = 2
+background_energy_multiplier = 0.5
+sky = SubResource("Sky_v0xaq")
+ssr_enabled = true
+glow_enabled = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_8t18e"]
+size = Vector2(20, 10)
+subdivide_width = 30
+subdivide_depth = 15
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_et5xh"]
+top_radius = 0.15
+bottom_radius = 0.15
+height = 4.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jdu6h"]
+albedo_texture = ExtResource("5_y2bgs")
+roughness = 0.5
+roughness_texture = ExtResource("7_q2acg")
+normal_enabled = true
+normal_texture = ExtResource("6_ucccv")
+
+[node name="WaterDemo" type="Node3D"]
+
+[node name="Beach" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.99531, 0.0967317, 0, -0.0967317, 0.99531, 0, 0, 0)
+mesh = SubResource("PlaneMesh_7ntsq")
+surface_material_override/0 = SubResource("StandardMaterial3D_grbwm")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.793704, -0.186653, 0.57896, -1.49012e-08, 0.951761, 0.306842, -0.608304, 0.243541, -0.755416, 0, 1.52784, 0)
+light_color = Color(0.847059, 0.85098, 0.733333, 1)
+light_energy = 0.8
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_unnir")
+
+[node name="Water" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.8578)
+mesh = SubResource("PlaneMesh_8t18e")
+surface_material_override/0 = ExtResource("4_dptbb")
+
+[node name="Pole" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.99975, -0.0223558, 9.31323e-10, 0.0206559, 0.923729, -0.38249, 0.00855087, 0.382394, 0.92396, 9.91301e-10, -0.270309, -2.34703)
+mesh = SubResource("CylinderMesh_et5xh")
+surface_material_override/0 = SubResource("StandardMaterial3D_jdu6h")
+
+[node name="Pole2" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.0223558, -0.99975, 0, 0.923729, -0.0206559, -0.38249, 0.382394, -0.00855085, 0.92396, 2.51771, -0.162943, -1.73146)
+mesh = SubResource("CylinderMesh_et5xh")
+surface_material_override/0 = SubResource("StandardMaterial3D_jdu6h")

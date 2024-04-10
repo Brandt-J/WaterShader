@@ -19,6 +19,8 @@ uniform float uv_scale: hint_range(0.1, 5.0, 0.1) = 1.0;
 uniform float depth_distance: hint_range(0.0, 10.0, 0.1) = 1.0;
 uniform float caustics_power: hint_range(0.0, 1.0, 0.1) = 1.0;
 uniform float caustics_distance: hint_range(0.0, 1.0, 0.05) = 0.3;
+uniform float foam_distance: hint_range(0.0, 0.1, 0.01) = 0.04;
+
 uniform sampler2D depth_texture: hint_depth_texture;
 uniform sampler2D screen_texture: hint_screen_texture;
 
@@ -59,7 +61,7 @@ void fragment() {
 	caustics_level = pow(caustics_level, 0.6);
 	caustics = vec3(caustics_level) * caustics;
 	
-	float foam_level = 1.0 - smoothstep(depth_blend, 0.0, 0.04);
+	float foam_level = 1.0 - smoothstep(depth_blend, 0.0, foam_distance);
 	foam_level = pow(foam_level, 3.0);
 	
 	vec3 foam = texture(foam_noise, uv).rgb;

@@ -29,3 +29,7 @@ The water shader is based on the version presented by CodeItAll:
 
 His approach again is inspired from the version from GDQuest:
 https://www.gdquest.com/tutorial/godot/shaders/introduction/chapter/
+
+
+If you want to support me, feel free to buy me a coffee ;-)
+<br> https://ko-fi.com/crushingjosch
